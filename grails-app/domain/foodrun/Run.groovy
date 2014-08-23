@@ -4,6 +4,7 @@ class Run {
 
     Date date
     String name
+    Boolean reminded
 
     static hasMany = [items: Item]
 
@@ -12,5 +13,6 @@ class Run {
     }
 
     static constraints = {
+        reminded default: false, nullable: true
     }
 }

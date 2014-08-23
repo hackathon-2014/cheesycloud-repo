@@ -73,5 +73,11 @@ grails.project.dependency.resolution = {
 
         //gson
         compile ":gson:1.1.4"
+
+        //quartz
+        compile ":quartz:1.0.2"
+
+
+        compile ":rest:0.8"
     }
 }
