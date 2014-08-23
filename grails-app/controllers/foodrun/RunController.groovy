@@ -19,10 +19,15 @@ class RunController extends RestfulController {
     @Transactional
     def save() {
         def run = new Run(request.GSON)
-        run.date = new Date()
-
         run.save(flush: true)
         render run as GSON
+    }
+
+    @Transactional
+    def itemSave() {
+        def item = new Item(request.GSON)
+        item.save(flush: true)
+        render item as GSON
     }
 
 
