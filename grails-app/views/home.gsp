@@ -1,5 +1,7 @@
 <g:include view="includes/header.gsp"></g:include>
 <h1 style="margin-left: 10px;">My Grocery Lists</h1>
+<a href="#" id="addListButton"class="btn btn-success">Add Run</a>
+
 <div id="allLists" class="panelContainer">
 
 </div>
