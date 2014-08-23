@@ -4,6 +4,25 @@
 
 </div>
 </div>
+
+<div id="addItemModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <p>One fine body…</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 
     var mainData;
@@ -23,6 +42,13 @@
 
             saveListItem(listItemObject);
         });
+
+        $(document).on('click','.addItemButton',function(e){
+            var id = e.target.id.split('_')[1];
+            console.log(id);
+            $('#addItemModal').modal('show');
+
+        });
     });
 
     function getAllLists(){
@@ -32,8 +58,9 @@
             dataType: "json",
             contentType: "application/json; charset=utf-8",
             success: function(data){
-                mainData = data;
-                _renderLists(data);
+                var sortedData = sortItems(data);
+                mainData = sortedData;
+                _renderLists(sortedData);
             }
         });
     }
@@ -62,7 +89,7 @@
                 }
             });
             html += '</ul>' +
-                    '<div class="btn btn-sm btn-success" style="display:block;">Add Item</div>' +
+                    '<div id="addItemButton_'+list.id+'"class="btn btn-sm btn-primary addItemButton" style="display:block;">Add Item</div>' +
                     '</div>' +
                     '</div>';
         });
@@ -114,6 +141,21 @@
             success: function(data){
                 getAllLists();
             }
+        });
+    }
+
+    function sortItems(data){
+        $(data).each(function(i, run){
+            data[i].items = sortByKey(run.items, 'id');
+        });
+
+        return data;
+    }
+
+    function sortByKey(array, key) {
+        return array.sort(function(a, b) {
+            var x = a[key]; var y = b[key];
+            return ((x < y) ? -1 : ((x > y) ? 1 : 0));
         });
     }
 
