@@ -12,7 +12,7 @@ class RunController extends RestfulController {
 
     def list(){
 
-        JSON.use('deep')
+        JSON.use('deep');
         render Run.list() as JSON
     }
 

@@ -5,7 +5,7 @@ dataSource {
     driverClassName = "org.postgresql.Driver"
     dialect = PostgreSQLDialect
     username = "postgres"
-    password = "postgres"
+    password = "harvardyo2"
 }
 hibernate {
     cache.use_second_level_cache = true
@@ -19,8 +19,8 @@ hibernate {
 environments {
     development {
         dataSource {
-            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:postgresql://localhost:5433/food_run"
+            dbCreate = "" // one of 'create', 'create-drop', 'update', 'validate', ''
+            url = "jdbc:postgresql://localhost:5432/food_run"
         }
     }
     test {

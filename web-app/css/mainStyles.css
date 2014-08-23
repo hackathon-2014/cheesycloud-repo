@@ -1,0 +1,45 @@
+body{
+    overflow: hidden;
+}
+
+.logo{
+    width: 150px;
+    margin-top: -10px;
+    margin-right: 0px;
+}
+
+.singlePanel{
+    display: inline-block;
+    width: 24.5%;
+    vertical-align: top;
+    height: 80%;
+    margin-left: 5px;
+}
+
+.panelContainer{
+    padding: 10px;
+    height: 90vh;
+    overflow: auto;
+}
+
+.runList{
+    list-style-type: none;
+    padding: 0px;
+}
+
+.runList input[type=checkbox]{
+    float: right;
+}
+
+.listItemChecked{
+    text-decoration: line-through;
+    color: grey;
+}
+
+.listItem{
+    padding: 5px;
+}
+
+.listItem:hover{
+    background: #444;
+}
