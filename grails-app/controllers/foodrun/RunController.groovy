@@ -11,7 +11,9 @@ class RunController extends RestfulController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def list(){
-        render Run.list().sort{it.id} as JSON
+
+        JSON.use('deep');
+        render Run.list() as JSON
     }
 
     @Transactional

@@ -6,7 +6,6 @@ class Item {
     Integer amount
     boolean checked
 
-    static belongsTo = [run: Run]
 
     static constraints = {
     }
