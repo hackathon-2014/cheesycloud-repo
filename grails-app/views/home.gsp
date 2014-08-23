@@ -1,6 +1,6 @@
 <g:include view="includes/header.gsp"></g:include>
 <h1 style="margin-left: 10px;">My Grocery Lists</h1>
-<a href="#" id="addListButton"class="btn btn-success">Add Run</a>
+<a href="#" id="addRunButton"class="btn btn-success">Add Run</a>
 
 <div id="allLists" class="panelContainer">
 
@@ -35,6 +35,30 @@
     </div>
 </div>
 
+<div id="addRunModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Add Run</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input class="form-control" id="id" type="hidden" value="" placeholder="ex: Milk">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="runName">Run Name</label>
+                    <input class="form-control" id="runName" type="text" value="" placeholder="ex: Pool Party">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveAddRunButton">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 
     var mainData;
@@ -63,6 +87,10 @@
 
         });
 
+        $(document).on('click','#addRunButton',function(e){
+            $('#addRunModal').modal('show');
+        });
+
         $(document).on('click','#saveAddItemButton',function(e){
             var runId = $('#addItemModal').find('#id').val();
             $('#addItemModal').find('#id').val(runId);
@@ -87,6 +115,28 @@
             });
         });
 
+
+        $(document).on('click','#saveAddRunButton',function(e){
+            var name = $('#addRunModal').find('#runName').val();
+            var run = {
+                name: name,
+                date: 'Aug 28, 2014 1:04:15 PM',
+                items: []
+            }
+
+            $.ajax({
+                url: "/FoodRun/run/save",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify(run),
+                contentType: "application/json; charset=utf-8",
+                success: function(data){
+                    $('#addRunModal').modal('hide');
+                    getAllLists();
+                }
+            });
+        });
+
         $(document).on('mouseover','.listItem',function(e){
             var id = e.target.id.split('_')[1];
             $('#deleteListItem_' + id).show();
@@ -102,6 +152,30 @@
             $('#deleteListItem_' + id).hide();
 
             deleteListItem(id);
+        });
+
+        $(document).on('mouseover','.panel-title',function(e){
+            $(e.target).find('.deleteRun').show();
+        });
+
+        $(document).on('mouseleave','.panel-title',function(e){
+            $(e.target).find('.deleteRun').hide();
+        });
+
+        $(document).on('click','.deleteRun',function(e){
+            var id = e.target.id.split('_')[1];
+            var runObject = getRunObject(id);
+
+            $.ajax({
+                url: "/FoodRun/run/delete",
+                type: "DELETE",
+                dataType: "json",
+                data: JSON.stringify(runObject),
+                contentType: "application/json; charset=utf-8",
+                success: function(data){
+                    getAllLists();
+                }
+            });
         });
 
 
@@ -127,7 +201,7 @@
         $(data).each(function(i, list){
             html += '<div class="panel panel-default singlePanel">' +
                     '<div class="panel-heading">' +
-                    '<h3 class="panel-title">'+list.name+'</h3>' +
+                    '<h3 class="panel-title">'+list.name+'<a href="#" id="deleteRun_'+list.id+'"class="btn btn-danger btn-xs deleteRun">x</a></h3>' +
                     '</div>' +
                     '<div class="panel-body">' +
                     '<ul class="runList" id="runList_'+list.id+'">' +

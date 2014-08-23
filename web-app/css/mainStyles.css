@@ -53,8 +53,13 @@ body{
     cursor: pointer;
 }
 
-#addListButton{
+#addRunButton{
     position: absolute;
     right: 10px;
     top: 80px;
+}
+
+.deleteRun{
+    float: right;
+    display: none;
 }
