@@ -10,14 +10,24 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Modal title</h4>
+                <h4 class="modal-title">Add Item</h4>
             </div>
             <div class="modal-body">
-                <p>One fine body…</p>
+                <div class="form-group">
+                    <input class="form-control" id="id" type="hidden" value="" placeholder="ex: Milk">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="item">Item Name</label>
+                    <input class="form-control" id="item" type="text" value="" placeholder="ex: Milk">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="amount">Quantity</label>
+                    <input class="form-control" id="amount" type="text" value="">
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" id="saveAddItemButton">Save changes</button>
             </div>
         </div>
     </div>
@@ -45,8 +55,37 @@
 
         $(document).on('click','.addItemButton',function(e){
             var id = e.target.id.split('_')[1];
-            console.log(id);
+            $('#addItemModal').find('#id').val(id);
             $('#addItemModal').modal('show');
+
+
+        });
+
+        $(document).on('click','#saveAddItemButton',function(e){
+            var runId = $('#addItemModal').find('#id').val();
+            $('#addItemModal').find('#id').val(runId);
+
+            var run = getRunObject(runId);
+            var item = {
+                name: $('#addItemModal').find('#item').val(),
+                amount: $('#addItemModal').find('#amount').val()
+            }
+            run.items.push(item);
+
+            $.ajax({
+                url: "/FoodRun/run/save",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify(run),
+                contentType: "application/json; charset=utf-8",
+                success: function(data){
+                    $('#addItemModal').modal('hide');
+                    getAllLists();
+                }
+            });
+
+
+
 
         });
     });
