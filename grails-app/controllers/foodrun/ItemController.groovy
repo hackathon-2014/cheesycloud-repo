@@ -1,28 +1,21 @@
 package foodrun
-
 import grails.converters.JSON
 import grails.plugin.gson.converters.GSON
 import grails.rest.RestfulController
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
-class RunController extends RestfulController {
+class ItemController extends RestfulController {
     static responseFormats = ['json']
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def list(){
-        render Run.list().sort{it.id} as JSON
+    def listByRun(){
+        def run = new Run(request.GSON)
+        render Item.findAllByRun(run).sort{it.id} as JSON
     }
 
     @Transactional
     def save() {
-        def run = new Run(request.GSON)
-        run.save(flush: true)
-        render run as GSON
-    }
-
-    @Transactional
-    def itemSave() {
         def item = new Item(request.GSON)
         item.save(flush: true)
         render item as GSON
@@ -31,10 +24,10 @@ class RunController extends RestfulController {
 
     @Transactional
     def delete() {
-        def run = new Run(request.GSON)
-        run.date = new Date()
+        def item = new Item(request.GSON)
+        item.date = new Date()
 
-        run.delete(flush: true)
+        item.delete(flush: true)
         def result = [success: true]
         render result as GSON
     }

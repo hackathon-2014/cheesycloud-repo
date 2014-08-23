@@ -6,6 +6,7 @@ class Run {
     String name
 
     static hasMany = [items: Item]
+    static mappedBy = [items: "run"]
 
     static mapping = {
         items lazy: false
