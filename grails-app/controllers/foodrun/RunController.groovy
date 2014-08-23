@@ -30,6 +30,17 @@ class RunController extends RestfulController {
         render item as GSON
     }
 
+    @Transactional
+    def itemDelete() {
+        def item = new Item(request.GSON)
+        def run = item.getRun()
+        run.removeFromItems(item)
+        run.save(flush: true)
+        item.delete(flush: true)
+        def result = [success: true]
+        render result as GSON
+    }
+
 
     @Transactional
     def delete() {

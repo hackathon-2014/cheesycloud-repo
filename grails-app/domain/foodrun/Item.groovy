@@ -7,6 +7,8 @@ class Item {
     boolean checked
 
 
+    static belongsTo = [run: Run]
+
     static constraints = {
     }
 

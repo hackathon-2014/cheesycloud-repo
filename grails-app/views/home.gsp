@@ -83,11 +83,26 @@
                     getAllLists();
                 }
             });
-
-
-
-
         });
+
+        $(document).on('mouseover','.listItem',function(e){
+            var id = e.target.id.split('_')[1];
+            $('#deleteListItem_' + id).show();
+        });
+
+        $(document).on('mouseleave','.listItem',function(e){
+            var id = e.target.id.split('_')[1];
+            $('#deleteListItem_' + id).hide();
+        });
+
+        $(document).on('click','.deleteListItem',function(e){
+            var id = e.target.id.split('_')[1];
+            $('#deleteListItem_' + id).hide();
+
+            deleteListItem(id);
+        });
+
+
     });
 
     function getAllLists(){
@@ -122,10 +137,14 @@
                 }
                 html += '">'+item.name+' <span class="text-muted">(' + item.amount + ')</span>';
                 if(item.checked){
-                    html += '<input type="checkbox" checked=""></li>';
+                    html += '<input type="checkbox" checked="">';
                 }else{
-                    html+= '<input type="checkbox"></li>';
+                    html+= '<input type="checkbox">';
                 }
+
+                html += '<span id="deleteListItem_'+item.id+'"class="deleteListItem" style="display:none;">x</span></li>';
+
+
             });
             html += '</ul>' +
                     '<div id="addItemButton_'+list.id+'"class="btn btn-sm btn-primary addItemButton" style="display:block;">Add Item</div>' +
@@ -196,6 +215,23 @@
             var x = a[key]; var y = b[key];
             return ((x < y) ? -1 : ((x > y) ? 1 : 0));
         });
+    }
+
+    function deleteListItem(id){
+
+        var listItem = getListItemObject(id);
+
+        $.ajax({
+            url: "/FoodRun/run/itemDelete",
+            type: "POST",
+            dataType: "json",
+            data: JSON.stringify(listItem),
+            contentType: "application/json; charset=utf-8",
+            success: function(data){
+                getAllLists();
+            }
+        });
+
     }
 
 </script>

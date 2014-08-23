@@ -43,3 +43,13 @@ body{
 .listItem:hover{
     background: #444;
 }
+
+.deleteListItem{
+    float: right;
+    color: lightsalmon;
+    padding-bottom: 2px;
+}
+
+.deleteListItem:hover{
+    cursor: pointer;
+}
