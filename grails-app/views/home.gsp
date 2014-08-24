@@ -122,7 +122,7 @@
             var name = $('#addRunModal').find('#runName').val();
             var run = {
                 name: name,
-                date: 'Aug 28, 2014 1:04:15 PM',
+                date: 'Aug '+new Date().getDate()+', '+(new Date().getYear() + 1900)+' 12:12:12 PM',
                 items: []
             }
 
