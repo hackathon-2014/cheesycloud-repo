@@ -63,3 +63,10 @@ body{
     float: right;
     display: none;
 }
+
+.runDate{
+    float: right;
+    vertical-align: top;
+    margin-top: 3px;
+    font-size: 12px;
+}

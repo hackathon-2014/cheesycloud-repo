@@ -25,7 +25,15 @@ class RunController extends RestfulController {
 
     @Transactional
     def itemSave() {
-        def item = new Item(request.GSON)
+        def json = request.JSON
+        def item = Item.get(json?.id as Long ?: 0)
+        if(item){
+            item.checked = json.checked
+            item.name = json.name
+            item.amount = json.amount
+        }else{
+            item = new Item(json)
+        }
         item.save(flush: true)
         render item as GSON
     }

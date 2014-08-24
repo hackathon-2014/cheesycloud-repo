@@ -12,8 +12,10 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="<g:resource dir="css" file="style.css" />">
     <link rel="stylesheet" href="<g:resource dir="css" file="mainStyles.css" />">
+    <link rel="stylesheet" href="<g:resource dir="datepicker/css" file="datepicker.css" />">
 
     <script src="<g:resource dir="js" file="jquery-2.1.1.min.js" />"></script>
+    <script src="<g:resource dir="datepicker/js" file="bootstrap-datepicker.js" />"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </head>
 

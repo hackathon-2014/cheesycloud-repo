@@ -66,6 +66,8 @@
     $(function(){
 
         getAllLists();
+
+        $('.datepicker').datepicker();
         $(document).on('click','.runList input[type=checkbox]',function(e){
             var listItemObject = getListItemObject($(e.target).parent()[0].id.split('_')[1]);
             if(e.target.checked){
@@ -201,7 +203,7 @@
         $(data).each(function(i, list){
             html += '<div class="panel panel-default singlePanel">' +
                     '<div class="panel-heading">' +
-                    '<h3 class="panel-title">'+list.name+'<a href="#" id="deleteRun_'+list.id+'"class="btn btn-danger btn-xs deleteRun">x</a></h3>' +
+                    '<h3 class="panel-title">'+list.name+'<a href="#" id="deleteRun_'+list.id+'"class="btn btn-danger btn-xs deleteRun">x</a><div class="runDate datepicker">'+new Date(list.date).toDateString()+'</div></h3>' +
                     '</div>' +
                     '<div class="panel-body">' +
                     '<ul class="runList" id="runList_'+list.id+'">' +
