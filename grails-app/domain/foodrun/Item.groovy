@@ -10,6 +10,7 @@ class Item {
     static belongsTo = [run: Run]
 
     static constraints = {
+        run nullable: true
     }
 
     static mapping = {
