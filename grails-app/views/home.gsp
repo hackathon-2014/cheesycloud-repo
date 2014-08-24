@@ -50,6 +50,18 @@
                     <label class="control-label" for="runName">Run Name</label>
                     <input class="form-control" id="runName" type="text" value="" placeholder="ex: Pool Party">
                 </div>
+                <div class="form-group">
+                    <label class="control-label" for="month">Month</label>
+                    <input class="form-control" id="month" type="text" value="" placeholder="ex: Aug">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="day">Day</label>
+                    <input class="form-control" id="day" type="text" value="" placeholder="ex: 18">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="year">Year</label>
+                    <input class="form-control" id="year" type="text" value="" placeholder="ex: 2014">
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -120,9 +132,12 @@
 
         $(document).on('click','#saveAddRunButton',function(e){
             var name = $('#addRunModal').find('#runName').val();
+            var month = $('#addRunModal').find('#month').val();
+            var day = $('#addRunModal').find('#day').val();
+            var year = $('#addRunModal').find('#year').val();
             var run = {
                 name: name,
-                date: 'Aug '+new Date().getDate()+', '+(new Date().getYear() + 1900)+' 12:12:12 PM',
+                date: month+' '+ day+', '+ year +' 12:12:12 PM',
                 items: []
             }
 
