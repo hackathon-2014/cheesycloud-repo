@@ -1,10 +1,11 @@
 <g:include view="includes/header.gsp"></g:include>
 <h1 style="margin-left: 10px;">My Grocery Lists</h1>
 <a href="#" id="addRunButton"class="btn btn-success">Add Run</a>
+<a href="#" id="addNewRecurring" class="btn btn-success">Add Recurring Item</a>
+
 
 <div id="allLists" class="panelContainer">
 
-</div>
 </div>
 
 <div id="addItemModal" class="modal fade">
@@ -30,6 +31,38 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" id="saveAddItemButton">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="addRecurringItemModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Add Item</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input class="form-control" id="id" type="hidden" value="" placeholder="ex: Milk">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="name">Item Name</label>
+                    <input class="form-control" id="name" type="text" value="" placeholder="ex: Milk">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="amount">amount</label>
+                    <input class="form-control" id="amount" type="number" value="">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="interval">Day Interval</label>
+                    <input class="form-control" id="interval" type="number" value="">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveAddRecurringItemButton">Save changes</button>
             </div>
         </div>
     </div>
@@ -65,7 +98,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="saveAddRunButton">Save changes</button>
+                <button type="button" class="btn btn-primary" id="saveAddRecurringItemButton">Save changes</button>
             </div>
         </div>
     </div>
@@ -99,6 +132,11 @@
             $('#addItemModal').modal('show');
 
 
+        });
+
+        $(document).on('click','#addNewRecurring',function(e){
+            var id = e.target.id.split('_')[1];
+            $('#addRecurringItemModal').modal('show');
         });
 
         $(document).on('click','#addRunButton',function(e){
@@ -149,6 +187,29 @@
                 contentType: "application/json; charset=utf-8",
                 success: function(data){
                     $('#addRunModal').modal('hide');
+                    getAllLists();
+                }
+            });
+        });
+
+        $(document).on('click','#saveAddRecurringItemButton',function(e){
+            var name = $('#addRecurringItemModal').find('#name').val();
+            var amount = $('#addRecurringItemModal').find('#amount').val();
+            var interval = $('#addRecurringItemModal').find('#interval').val();
+            var item = {
+                name: name,
+                amount: amount,
+                dayInterval: interval
+            }
+
+            $.ajax({
+                url: "/FoodRun/masterItem/save",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify(item),
+                contentType: "application/json; charset=utf-8",
+                success: function(data){
+                    $('#addRecurringItemModal').modal('hide');
                     getAllLists();
                 }
             });

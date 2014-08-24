@@ -59,6 +59,12 @@ body{
     top: 80px;
 }
 
+#addNewRecurring{
+    position: absolute;
+    right: 115px;
+    top: 80px;
+}
+
 .deleteRun{
     float: right;
     display: none;
