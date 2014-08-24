@@ -41,11 +41,12 @@ class CreateRunsJob {
     def execute(){
         MasterItem.list().each {mItem ->
             def runs = Run.findAllByDateBetween(getPastDate(mItem.dayInterval), getFutureDate(mItem.dayInterval))
+            Boolean createdRun = false
             runs.each { run ->
                 Item foundItem = run.items.find{it.name == mItem.name}
                 if(foundItem){
 
-                    def foundRun = Run.findAllByDateGreaterThan(new Date()).find{compareDateDays(it.date, getFutureDate(run.date, mItem.dayInterval))}
+                    def foundRun = Run.findAllByDateBetween(new Date(),getFutureDate(mItem.dayInterval)).find{compareDateDays(it.date, getFutureDate(run.date, mItem.dayInterval))}
                     if(!foundRun){
                         foundRun = new Run()
                         foundRun.date = getFutureDate(run.date, mItem.dayInterval)
@@ -62,8 +63,24 @@ class CreateRunsJob {
                         }
                         foundRun.items.add(item)
                         foundRun.save(flush: true)
+                        createdRun = true
                     }
                 }
+            }
+            if(!createdRun){
+                Run newRun = new Run()
+                newRun.date = new Date()
+                newRun.name = "Future Run"
+                Item item = new Item()
+                item.name = mItem.name
+                item.amount = mItem.amount
+                item.run = newRun
+                item.save()
+                if(!newRun.items){
+                    newRun.items = new HashSet<Item>()
+                }
+                newRun.items.add(item)
+                newRun.save(flush: true)
             }
 
         }
