@@ -13,7 +13,7 @@ class RunController extends RestfulController {
     def list(){
 
         JSON.use('deep');
-        render Run.list() as JSON
+        render Run.list().sort{it.date} as JSON
     }
 
     @Transactional
