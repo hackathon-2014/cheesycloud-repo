@@ -7,7 +7,7 @@ import foodrun.Run
  */
 class CreateRunsJob {
     static triggers = {
-        simple name:'simpleTrigger', startDelay:10000, repeatInterval: 30000, repeatCount: 10
+        simple name:'simpleTrigger', startDelay:10000, repeatInterval: 60000, repeatCount: 10
     }
     def group = "MyGroup"
     def description = "Example job with Cron Trigger"
